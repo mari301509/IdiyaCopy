@@ -1,0 +1,157 @@
+/*레이아웃*/
+.drink-list {
+    max-width: 850px;
+    width: calc(100% - 40px);
+
+    margin: 105px auto 50px;
+    display: flex;
+    flex-flow: row wrap;
+
+    justify-content: center;
+}
+
+.drink-item {
+    position: relative;
+    margin: 0 10px 20px;
+
+    width: calc(50% - 20px);
+    height: 360px;
+
+}
+
+.btn-infoOpen {
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    position: relative;
+}
+
+.btn-infoOpen span {
+    display: block;
+    font-size: 1.6rem;
+}
+.drink-image {
+    transition: transform 0.4s;
+} 
+/* 커피메뉴 이미지 애니메이션 */
+.btn-infoOpen:hover .drink-image {
+    transform: scale(1.1);
+}
+
+/* 카페메뉴  */
+.drink-info {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+
+    background-color: rgba(255,255,255,0.6);
+
+    display: flex;
+    flex-flow: row wrap;
+
+    border: 1px solid #ccc;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition: all 0.8s;
+}
+.drink-act .drink-info {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+.drink-infoWrap {
+    width: 100%;
+    padding: 40px 20px 0;
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+/*음료 소개*/
+.drink-infoName{
+    display: block;
+    font-size: 1.8rem;
+    font-style: normal;
+    /* border-bottom: 2px solid #202023; */
+}
+.drink-infoName::after{
+    content: attr(data-enname);
+    font-size: 1.4rem;
+    color: #999;
+    display: block;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #202023;
+}
+/* 본문의 div -> p요소로 수정하였기 때문에 가상요소의 보더를 설정함. */
+
+/* .drink-infoEx{
+    font-size: 1.6rem;
+} */
+
+/*음료 성분*/
+.drink-infoCompList {
+    align-self: flex-end;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    width: calc(100% - 1px);
+    height: 95px;
+    font-size: 1.3rem;
+
+    background-color: #f8f8f8;
+
+    padding: 15px 30px;
+}
+.drink-infoCompList::after {
+    content:"";
+    display: block;
+    width: 1px;
+    height: 100%;
+    background-color: #ccc;
+    order: -1;
+}
+.drink-infoCompList div:nth-child(-n+3){
+    order: -2;
+}
+
+.drink-infoCompTerm,
+.drink-infoCompD{
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+/*dt dd width 고정*/
+.drink-infoCompTerm {
+    width: 5em;
+}
+.drink-infoCompD{
+    width: 4em;
+}
+
+
+/* 커피메뉴 닫기 애니메이션 */
+.btn-infoClose {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url(../images/button/Close_2.png) no-repeat center;
+
+    width: 40px;
+    height: 40px;
+
+    transition: 0.5s;
+}
+
+@media screen and (max-width: 700px){
+    .drink-item{
+        width: 90%;
+        min-width: 280px;
+    }
+}

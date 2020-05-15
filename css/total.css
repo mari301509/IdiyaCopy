@@ -1,0 +1,68 @@
+/* 기본 스타일링 */
+html {
+    font-size: 10px;
+}
+body {
+    font-size: 1.4rem;
+    margin: 0;
+    color: #0f0f0f;
+    font-family: 'Spoqa Han Sans', sans-serif;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+button{
+    cursor: pointer;
+}
+h1,h2{
+    margin: 0;
+}
+ul{
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style-type: none;
+}
+body *{
+    box-sizing: border-box;
+}
+dl{
+    margin: 0;
+}
+dd{
+    margin-left: 0;
+}
+/* 드래그 스타일링 */
+body *::selection {
+    background-color: navy;
+    color: #fff;
+}
+img::selection {
+    background-color: transparent;
+}
+/* 리셋 모듈 */
+.resetButton {
+    border: none;
+    padding: 0;
+    background: transparent;
+}
+
+/*스타일모듈*/
+.a11y-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    clip-path: polygon(0% 0%, 0% 0%, 0% 0%,0% 0%);
+}
+.btn-gray:hover,
+.header .btn-gray:focus{
+    background-color: #eee;
+}
+.ariaButton{
+    text-indent: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+}

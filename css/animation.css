@@ -1,0 +1,89 @@
+@keyframes menuOpen {
+    0%{
+        visibility: hidden;
+        transform: translateX(105%);
+    }
+    100%{
+        visibility: visible;
+        transform: none;
+    }
+}
+@keyframes menuClose {
+    0%{
+        visibility: visible;
+        transform: none;
+    }
+    100%{
+        visibility: hidden;
+        transform: translateX(105%);
+
+    }
+}
+
+@keyframes drinkItem {
+    0%{
+        transform: translateY(15%);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes logo {
+    0%{
+        transform: translateX(-130%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+@keyframes menuIcon {
+    0%{
+        transform: translateX(130%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+@keyframes header {
+    0%{
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/*애니메이션 설정*/
+.logo{
+    animation: logo 0.5s 0.7s both;
+}
+.btn-openMenu{
+    animation: menuIcon 0.5s 0.7s both;
+}
+.header{
+    animation: header 1s both;
+}
+.drink-item{
+    animation: drinkItem 1.2s both;
+    animation-delay: 0.5s;
+}
+.drink-item:nth-child(1){
+    animation-delay: 1s;
+}
+.drink-item:nth-child(2){
+    animation-delay: 1.2s;
+}
+.drink-item:nth-child(3){
+    animation-delay: 1.4s;
+}
+.drink-item:nth-child(4){
+    animation-delay: 1.6s;
+}

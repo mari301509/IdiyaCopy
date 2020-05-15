@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="author" content="이마리, 이우성">
+    <meta name="description" content="이디야 커피 웹 페이지 구현 예제입니다.">
+    <meta name="keywords" content="이디야멤버스, 이디야커피랩, 이디야컬쳐랩, 이디야 매장찾기">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>이디야 커피</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/jquery.min.js" defer></script>
+    <script src="./js/main.js" defer></script>
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="logo">
+            <a class='logo-link' href="https://www.ediya.com/" target="_blank">
+                <img src="./images/Logo.svg" alt="이디야 커피">
+            </a>
+        </h1>
+        <nav class="header-nav" aria-labelledby="nav-menu">
+            <h2 class="a11y-hidden" id="nav-menu">메인메뉴 목록</h2>
+            <button class="btn-openMenu resetButton btn-gray ariaButton" type="button">메인메뉴 목록 열기</button>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <li class="menu-item"><a class="menu-link" href=".">메뉴</a></li>
+                    <li class="menu-item"><a class="menu-link" href=".">이디야멤버스</a></li>
+                    <li class="menu-item"><a class="menu-link" href=".">이디야커피랩</a></li>
+                    <li class="menu-item"><a class="menu-link" href=".">이디야컬쳐랩</a></li>
+                    <li class="menu-item"><a class="menu-link" href=".">공지사항</a></li>
+                    <li class="menu-item"><a class="menu-link" href=".">매장찾기</a></li>
+                </ul>
+                <button class="btn-closeMenu resetButton ariaButton" type="button">메인메뉴 목록 닫기</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <h2 class="a11y-hidden">음료리스트</h2>
+        <ul class="drink-list">
+            <li class="drink-item">
+                <button class="btn-infoOpen resetButton" title="설명 보기" type="button" aria-haspopup="true" aria-pressed="false">
+                    <!-- 해당버튼이 팝업메뉴를 가지고 있음을 나타내기 위하여 aria-haspopup="true" 속성을 추가하였고
+                         버튼이 눌리지 않았을 때의 평상 시 상태를 알려주기 위해 aria-pressed="false"또한 추가하였습니다.
+                         추가적으로 jquery를 이용해 버튼이 눌렸을 때에는 aria-pressed="true"가 되도록 설정 해 놓았습니다.-->
+                    <img class="drink-image"
+                    srcset="./images/drink/iceCherryBlossomLatte-1x.png 200w,
+                            ./images/drink/iceCherryBlossomLatte-2x.png 400w" 
+                    src="./images/drink/iceCherryBlossomLatte-1x.png"
+                    sizes="200px"
+                    alt="ICED 벚꽃라떼">
+                    <span aria-hidden="true">ICED 벚꽃라떼</span>
+                    <!-- 기존 span 요소로 마크업 되어있던 설명보기를 삭제하고 음료 명을 담고있는 span 요소에 스크린리더에서 읽을 수 없도록 aria-hidden="true" 추가
+                         이와같이 마크업할 경우 img의 대체 텍스트인 alt=""를 스크린리더가 읽을 수 있기 떄문에 'ICED 벚꽃라떼 이미지 버튼'이라고 읽히게 된다.
+                         설명보기라는 문구를 기존과 같이 추가하고 싶으면 현 마크업에서 음료명을 담고있는 span 뒤에 span요소를 활용하여 설명보기라고 마크업 후 
+                         화면에서 안보이도록 class="a11y-hidden"만 추가하면 'ICED 벚꽃라떼 이미지 설명보기 버튼' 이라고 읽을 수 있을 듯 합니다.
+                         주석은 li요소 중 첫번째 요소에만 처리하였지만 하위 7개의 li 요소에도 동일하게 적용시켜 놓았습니다.-->
+                </button>
+                <div class="drink-info" role="dialog" aria-modal="true" aria-labelledby="iceCherryBlossom">
+                    <!-- 상기 aria-haspopup 속성을 부여한 버튼과 연결되는 팝업을 나타내기 위해 div 요소에 role="dialog" 및
+                         모달 팝업창 임을 명시하기 위해 aria-modal="true"를 추가하였습니다. 
+                         또한, 해당 팝업의 설명 제공을 위해 dfn 요소에 id 및 div 요소에 aria-labelledby 속성을 추가하여 두 속성을 연결하였습니다.  
+                         마찬가지로 하위 7개의 li요소 내부에 동일하게 처리 해 놓았습니다.-->
+                    <p class="drink-infoWrap">
+                        <dfn class="drink-infoName" data-enname="Cherry Blossom Latte" id="iceCherryBlossom">ICED 벚꽃라떼</dfn>
+                        은은한 벚꽃향과 라즈베리 화이트 초콜릿 토핑이 올라간 핑크빛 라떼
+                    </p>
+                    <!-- 기존 div 요소 내부에 dfn요소를 이용하여 정의를 하고 p요소를 사용하여 세부설명을 하였던것을 정확한 dfn 요소 사용을 위해 
+                         div요소를 -> p요소로 바꾸어 주었으며, 설명을 감싸고 있던 p 요소를 삭제하였습니다. 
+                         마찬가지로 하위 7개의 li요소 내부에 동일하게 처리 해 놓았습니다.-->
+                    <dl class="drink-infoCompList">
+                        <div>
+                            <dt class="drink-infoCompTerm">칼로리</dt>
+                            <dd class="drink-infoCompD">(393kcal)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">당류</dt>
+                            <dd class="drink-infoCompD">(35g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">단백질</dt>
+                            <dd class="drink-infoCompD">(7g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">포화지방</dt>
+                            <dd class="drink-infoCompD">(18.6g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">나트륨</dt>
+                            <dd class="drink-infoCompD">(149mg)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">카페인</dt>
+                            <dd class="drink-infoCompD">(0mg)</dd>
+                        </div>
+                    </dl>
+                    <button class="btn-infoClose resetButton btn-gray ariaButton" aria-label="ICED 벛꽃라떼 설명 닫기" type="button">설명 닫기</button>
+                </div>
+            </li>
+            <li class="drink-item">
+                <button class="btn-infoOpen resetButton" title="설명 보기" type="button" aria-haspopup="true" aria-pressed="false">
+                    <img class="drink-image"
+                    srcset="./images/drink/hotCherryBlossomLatte-1x.png 200w,
+                            ./images/drink/hotCherryBlossomLatte-2x.png 400w" 
+                    src="./images/drink/hotCherryBlossomLatte-1x.png"
+                    sizes="200px"
+                    alt="HOT 벚꽃라떼">
+                    <span aria-hidden="true">HOT 벚꽃라떼</span>
+                </button>
+                <div class="drink-info" role="dialog" aria-modal="true" aria-labelledby="hotCherryBlossom">        
+                    <p class="drink-infoWrap">
+                        <dfn class="drink-infoName" data-enname="Cherry Blossom Latte" id="hotCherryBlossom">HOT 벚꽃라떼</dfn>
+                        은은한 벚꽃향과 라즈베리 화이트 초콜릿 토핑이 올라간 핑크빛 라떼
+                    </p>
+                    <dl class="drink-infoCompList">
+                        <div>
+                            <dt class="drink-infoCompTerm">칼로리</dt>
+                            <dd class="drink-infoCompD">(430kcal)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">당류</dt>
+                            <dd class="drink-infoCompD">(38g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">단백질</dt>
+                            <dd class="drink-infoCompD">(10g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">포화지방</dt>
+                            <dd class="drink-infoCompD">(19.0g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">나트륨</dt>
+                            <dd class="drink-infoCompD">(190mg)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">카페인</dt>
+                            <dd class="drink-infoCompD">(0mg)</dd>
+                        </div>
+                    </dl>
+                    <button class="btn-infoClose resetButton btn-gray ariaButton" title="설명 닫기" aria-label="HOT 벚꽃라떼 설명 닫기" type="button">설명 닫기</button>
+                </div>
+            </li>
+            <li class="drink-item">
+                <button class="btn-infoOpen resetButton" title="설명 보기" type="button" aria-haspopup="true" aria-pressed="false">
+                    <img class="drink-image"
+                    srcset="./images/drink/iceBrownieChocolate-1x.png 200w,
+                            ./images/drink/iceBrownieChocolate-2x.png 400w" 
+                    src="./images/drink/iceBrownieChocolate-1x.png"
+                    sizes="200px"
+                    alt="ICED 브라우니 쇼콜라" >
+                    <span aria-hidden="true">ICED 브라우니 쇼콜라</span>
+                </button>
+                <div class="drink-info" role="dialog" aria-modal="true" aria-labelledby="iceBrownieChocolate">
+                    <p class="drink-infoWrap">
+                        <dfn class="drink-infoName" data-enname="Brownie Chocolate" id="iceBrownieChocolate">ICED 브라우니 쇼콜라</dfn>
+                        깊고 진한 초콜릿의 맛에 부드러운 휘핑크림과 브라우니를 함께 어울러져 고급스러운 디저트 같은 초콜릿 음료
+                    </p>
+                    <dl class="drink-infoCompList">
+                        <div>
+                            <dt class="drink-infoCompTerm">칼로리</dt>
+                            <dd class="drink-infoCompD">(393kcal)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">당류</dt>
+                            <dd class="drink-infoCompD">(35g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">단백질</dt>
+                            <dd class="drink-infoCompD">(7g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">포화지방</dt>
+                            <dd class="drink-infoCompD">(18.6g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">나트륨</dt>
+                            <dd class="drink-infoCompD">(149mg)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">카페인</dt>
+                            <dd class="drink-infoCompD">(0mg)</dd>
+                        </div>
+                    </dl>
+                    <button class="btn-infoClose resetButton btn-gray ariaButton" title="설명 닫기" aria-label="ICED 브라우니 쇼콜라 설명 닫기" type="button">설명 닫기</button>
+                </div>
+            </li>
+            <li class="drink-item">
+                <button class="btn-infoOpen resetButton" title="설명 보기" type="button" aria-haspopup="true" aria-pressed="false">
+                    <img class="drink-image"
+                    srcset="./images/drink/hotBrownieChocolate-1x.png 200w,
+                            ./images/drink/hotBrownieChocolate-2x.png 400w"
+                    src="./images/drink/hotBrownieChocolate-1x.png"
+                    sizes="200px"
+                    alt="HOT 브라우니 쇼콜라">
+                    <span aria-hidden="true">HOT 브라우니 쇼콜라</span>
+                </button>
+                <div class="drink-info" role="dialog" aria-modal="true" aria-labelledby="hotBrownieChocolate">
+                    <p class="drink-infoWrap">
+                        <dfn class="drink-infoName" data-enname="Brownie Chocolate" id="hotBrownieChocolate">HOT 브라우니 쇼콜라</dfn>
+                        깊고 진한 초콜릿의 맛에 부드러운 휘핑크림과 브라우니를 함께 어울러져 고급스러운 디저트 같은 초콜릿 음료
+                    </p>
+                    <dl class="drink-infoCompList">
+                        <div>
+                            <dt class="drink-infoCompTerm">칼로리</dt>
+                            <dd class="drink-infoCompD">(503kcal)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">당류</dt>
+                            <dd class="drink-infoCompD">(42g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">단백질</dt>
+                            <dd class="drink-infoCompD">(9g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">포화지방</dt>
+                            <dd class="drink-infoCompD">(20.8g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">나트륨</dt>
+                            <dd class="drink-infoCompD">(262mg)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">카페인</dt>
+                            <dd class="drink-infoCompD">(12mg)</dd>
+                        </div>
+                    </dl>
+                    <button class="btn-infoClose resetButton btn-gray ariaButton" title="설명 닫기" aria-label="HOT 브라우니 쇼콜라 설명 닫기" type="button">설명 닫기</button>
+                </div>
+            </li>
+            <li class="drink-item">
+                <button class="btn-infoOpen resetButton" title="설명 보기" type="button" aria-haspopup="true" aria-pressed="false">
+                    <img class="drink-image"
+                    srcset="./images/drink/jejuGreenTangerineTea-1x.png 200w,
+                            ./images/drink/jejuGreenTangerineTea-2x.png 400w"
+                    src="./images/drink/jejuGreenTangerineTea-1x.png" 
+                    sizes="200px"
+                    alt="제주청귤 오리지널" >
+                    <span aria-hidden="true">제주청귤 오리지널</span>
+                </button>
+                <div class="drink-info" role="dialog" aria-modal="true" aria-labelledby="jejuGreenTangerineTea">
+                    <p class="drink-infoWrap">
+                        <dfn class="drink-infoName" data-enname="Jeju Green Tangerine Tea" id="jejuGreenTangerineTea">제주청귤 오리지널</dfn>
+                        청정 제주지역에서 자라난 귀한 청귤의 풍부한 과육을 맛볼 수 있는 새콤달콤한 홈메이드 스타일 과일차
+                    </p>
+                    <dl class="drink-infoCompList">
+                        <div>
+                            <dt class="drink-infoCompTerm">칼로리</dt>
+                            <dd class="drink-infoCompD">(218kcal)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">당류</dt>
+                            <dd class="drink-infoCompD">(51g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">단백질</dt>
+                            <dd class="drink-infoCompD">(0g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">포화지방</dt>
+                            <dd class="drink-infoCompD">(0.1g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">나트륨</dt>
+                            <dd class="drink-infoCompD">(4mg)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">카페인</dt>
+                            <dd class="drink-infoCompD">(0mg)</dd>
+                        </div>
+                    </dl>
+                    <button class="btn-infoClose resetButton btn-gray ariaButton" title="설명 닫기" aria-label="제주청귤 오리지널 설명 닫기"  type="button">설명 닫기</button>
+                </div>
+            </li>
+            <li class="drink-item">
+                <button class="btn-infoOpen resetButton" title="설명 보기" type="button" aria-haspopup="true" aria-pressed="false">
+                    <img class="drink-image"
+                    srcset="./images/drink/jejuGreenTangerineBlossom-1x.png 200w,
+                            ./images/drink/jejuGreenTangerineBlossom-2x.png 400w" 
+                    src="./images/drink/jejuGreenTangerineBlossom-1x.png"
+                    sizes="200px"
+                    alt=" 제주청귤 블라썸" >
+                    <span aria-hidden="true">제주청귤 블라썸</span>
+                </button>
+                <div class="drink-info" role="dialog" aria-modal="true" aria-labelledby="jejuGreenTangerineBlossom">
+                    <p class="drink-infoWrap">
+                        <dfn class="drink-infoName" data-enname="Jeju Green Tangerine Blossom" id="jejuGreenTangerineBlossom">제주청귤 블라썸</dfn>
+                        청귤의 새콤함이 복숭아, 포도 등의 다양한 과일향과 함께 어우러져 밸런스가 훌륭한 블렌딩티
+                    </p>
+                    <dl class="drink-infoCompList">
+                        <div>
+                            <dt class="drink-infoCompTerm">칼로리</dt>
+                            <dd class="drink-infoCompD">(220kcal)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">당류</dt>
+                            <dd class="drink-infoCompD">(46g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">단백질</dt>
+                            <dd class="drink-infoCompD">(1g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">포화지방</dt>
+                            <dd class="drink-infoCompD">(0.1g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">나트륨</dt>
+                            <dd class="drink-infoCompD">(5mg)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">카페인</dt>
+                            <dd class="drink-infoCompD">(0mg)</dd>
+                        </div>
+                    </dl>
+                    <button class="btn-infoClose resetButton btn-gray ariaButton" title="설명 닫기" aria-label="제주청귤 블라썸 설명 닫기" type="button">설명 닫기</button>
+                </div>
+            </li>
+            <li class="drink-item">
+                <button class="btn-infoOpen resetButton" title="설명 보기" type="button" aria-haspopup="true" aria-pressed="false">
+                    <img class="drink-image"
+                    srcset="./images/drink/pomegranateTea-1x.png 200w,
+                            ./images/drink/pomegranateTea-2x.png 400w"
+                    src="./images/drinK/pomegranateTea-1x.png"
+                    sizes="200px"
+                    alt="석류 오리지널">
+                    <span aria-hidden="true">석류 오리지널</span>
+                </button>
+                <div class="drink-info" role="dialog" aria-modal="true" aria-labelledby="pomegranateTea">
+                    <p class="drink-infoWrap">
+                        <dfn class="drink-infoName" data-enname="Pomegranate Tea" id="pomegranateTea">석류 오리지널</dfn>
+                        석류 특유의 산뜻한 향과 깔끔한 뒷맛이 느껴지며, 과육이 한알 한알 살아있는 붉은 빛의 매력적인 과일차
+                    </p>
+                    <dl class="drink-infoCompList">
+                        <div>
+                            <dt class="drink-infoCompTerm">칼로리</dt>
+                            <dd class="drink-infoCompD">(210kcal)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">당류</dt>
+                            <dd class="drink-infoCompD">(42g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">단백질</dt>
+                            <dd class="drink-infoCompD">(0g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">포화지방</dt>
+                            <dd class="drink-infoCompD">(0.1g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">나트륨</dt>
+                            <dd class="drink-infoCompD">(5mg)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">카페인</dt>
+                            <dd class="drink-infoCompD">(0mg)</dd>
+                        </div>
+                    </dl>
+                    <button class="btn-infoClose resetButton btn-gray ariaButton" title="설명 닫기" aria-label="석류 오리지널 설명 닫기" type="button">설명 닫기</button>
+                </div>
+            </li>
+            <li class="drink-item">
+                <button class="btn-infoOpen resetButton" title="설명 보기" type="button" aria-haspopup="true" aria-pressed="false">
+                    <img class="drink-image" 
+                    srcset="./images/drink/pomegranateAppleLime-1x.png 200w,
+                            ./images/drink/pomegranateAppleLime-2x.png 400w"
+                    src="./images/drink/pomegranateAppleLime-1x.png"
+                    sizes="200px"
+                    alt="석류 애플라임">
+                    <span aria-hidden="true">석류 애플라임</span>
+                </button>
+                <div class="drink-info" role="dialog" aria-modal="true" aria-labelledby="pomegranateAppleLime">
+                    <p class="drink-infoWrap">
+                        <dfn class="drink-infoName" data-enname="Pomegranate Apple Lime" id="pomegranateAppleLime">석류 애플라임</dfn>
+                        산뜻한 석류에 다양한 과일과 꽃, 그리고 샴페인의 향이 더해져 보다 깊고 중후한 맛이 느껴지는 블렌딩티
+                    </p>
+                    <dl class="drink-infoCompList">
+                        <div>
+                            <dt class="drink-infoCompTerm">칼로리</dt>
+                            <dd class="drink-infoCompD">(220kcal)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">당류</dt>
+                            <dd class="drink-infoCompD">(42g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">단백질</dt>
+                            <dd class="drink-infoCompD">(1g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">포화지방</dt>
+                            <dd class="drink-infoCompD">(0.1g)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">나트륨</dt>
+                            <dd class="drink-infoCompD">(7mg)</dd>
+                        </div>
+                        <div>
+                            <dt class="drink-infoCompTerm">카페인</dt>
+                            <dd class="drink-infoCompD">(0mg)</dd>
+                        </div>
+                    </dl>
+                    <button class="btn-infoClose resetButton btn-gray ariaButton" title="설명 닫기" aria-label="석류 애플라임 설명 닫기" type="button">설명 닫기</button>
+                </div>
+            </li>
+        </ul>
+    </main>
+</body>
+
+</html>
